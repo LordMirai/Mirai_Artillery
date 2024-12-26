@@ -1,0 +1,1 @@
+MArti.GUI.Admin = {}
