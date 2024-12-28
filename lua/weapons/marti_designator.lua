@@ -20,6 +20,11 @@ SWEP.AutoSwitchFrom = false
 SWEP.ViewModel = "" -- will most likely be nothing
 SWEP.WorldModel = ""
 
+SWEP.Cooldown = 0.1
+SWEP.Automatic = true
+
+SWEP.State = "direct"
+SWEP.LastReload = 0 // Last reload time
 
 function SWEP:Initialize()
     self:SetHoldType("pistol")
@@ -30,18 +35,76 @@ function SWEP:PrimaryAttack()
         return
     end
 
-    self:SetNextPrimaryFire(CurTime() + 1.5) -- 1.5 second cooldown between uses
+    self:SetNextPrimaryFire(CurTime() + self.Cooldown)
 
     local ply = self:GetOwner()
     local tr = ply:GetEyeTrace()
-    local ent = tr.Entity
+    local hitPos = tr.HitPos
 
-    
+    if (not IsValid(self.boundCannon)) then
+        print("No bound cannon")
+        return
+    end
+
+    if self.State == "direct" then
+        self.boundCannon:AimToward(hitPos)
+    elseif self.State == "indirect" then
+        self.boundCannon:AimIndirect(hitPos)
+    elseif self.State == "distance" then
+        local dist = hitPos:Distance(self.boundCannon:GetPos())
+        dist = math.Round(dist)
+        PrintMessage(HUD_PRINTTALK, "Distance to target: " .. tostring(dist))
+    end
 end
 
 
 function SWEP:SecondaryAttack()
-    if (self:IsFirstTimePredicted()) then
-        
+    if (CLIENT) then
+        return
     end
+    if (IsFirstTimePredicted()) then
+        // trace
+        local ply = self:GetOwner()
+        local tr = ply:GetEyeTrace()
+        local ent = tr.Entity
+
+        if (not IsValid(ent)) then
+            return
+        end
+
+        if (not ent.IsArtillery) then
+            return
+        end
+
+        self.boundCannon = ent
+        print("Bound cannon to designator -- " .. ent:EntIndex())
+
+    end
+end
+
+function SWEP:Reload()
+    if (CLIENT) then
+        return
+    end
+
+    local currentTime = CurTime()
+    if (currentTime - self.LastReload < 1) then
+        return // Cooldown of 1 second
+    end
+
+    self.LastReload = currentTime
+
+    self:AdvanceState()
+end
+
+function SWEP:AdvanceState()
+    if (self.State == "direct") then
+        self.State = "indirect"
+    elseif (self.State == "indirect") then
+        self.State = "distance"
+    else
+        self.State = "direct"
+    end
+
+    PrintMessage(HUD_PRINTTALK, "Designator state changed to " .. self.State)
 end

@@ -1,7 +1,7 @@
 include("shared.lua")
 
 local textToDraw = "ARTILLERY CANNON"
-local maxDist = 300000
+local maxDist = 8000000
 
 function ENT:Draw()
     local ply = LocalPlayer()
@@ -16,13 +16,13 @@ function ENT:Draw()
 
     self:DrawModel()
 
-    local pos = self:GetPos() + Vector(0, 0, 0)
+    local pos = self:GetPos()
     local angle = EyeAngles()
 
     angle:RotateAroundAxis(angle:Up(), -90)
 	angle:RotateAroundAxis(angle:Forward(), 90)
 
-	pos = pos + Vector(0, 0, math.cos(CurTime()*1.2) + 20)
+	pos = pos + Vector(0, 0, math.cos(CurTime()*1.2) + 80) + self:GetForward() * 40
 
 	cam.Start3D2D(pos, angle, 0.08)
 		local tW, tH = 450, 15

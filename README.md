@@ -115,3 +115,7 @@ This addon aims to enhance the sandbox and combat experience by allowing players
 
 This addon is licensed under the Creative Commons Attribution-ShareAlike (CC BY-SA) license.
 You are free to use, modify, and distribute this addon as long as you credit the author and share any derivative works under the same license.
+
+### Additional Workshop Addons
+
+[Models - CoD WaW Artillery pack (and its dependencies)](https://steamcommunity.com/sharedfiles/filedetails/?id=2471952707)

@@ -1,0 +1,28 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models\codwaw\artillery\mtl_pak43_ger_body"
+	"$bumpmap"     "models\codwaw\artillery\mtl_pak43_ger_body_n"
+
+	"$phong" "1"
+	"$phongboost" "3.5"
+	"$phongexponent" "10"
+	"$phongfresnelranges" "[2 1.2 8]"
+	"$phongalbedotint" "1"
+	"$normalmapalphaenvmapmask" "1"
+
+	"$detail" "models\codwaw\artillery\mtl_pak43_ger_body_s"    
+	"$detailscale" "1"        
+	"$detailblendfactor" "0.15"     
+	"$detailblendmode" "0.5"
+
+
+
+
+	"$phongexponenttexture" "models\codwaw\artillery\exponent"
+
+
+	"$cloakPassEnabled" 		"1"				
+	"$nocull" "1"
+
+
+}

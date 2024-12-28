@@ -1,0 +1,1 @@
+util.AddNetworkString("MArti_SendMessage")
